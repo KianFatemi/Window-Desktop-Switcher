@@ -1,0 +1,14 @@
+{
+    "F1": {
+        "desktop": 1,
+        "exe": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\devenv.exe"
+    },
+    "F2": {
+        "desktop": 2,
+        "exe": "C:\\Program Files\\pgAdmin 4\\v8\\runtime\\pgAdmin4.exe"
+    },
+    "F3": {
+        "desktop": 3,
+        "exe": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+    }
+}
