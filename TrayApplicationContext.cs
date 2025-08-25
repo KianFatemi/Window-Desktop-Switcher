@@ -10,6 +10,8 @@ namespace WindowDesktopSwitcher
     class TrayApplicationContext : ApplicationContext
     {
         NotifyIcon trayIcon;
+        ConfigManager configManager = new ConfigManager();
+        HotkeyManager hotkeyManager = new HotkeyManager();
 
         public TrayApplicationContext()
         {
@@ -22,6 +24,17 @@ namespace WindowDesktopSwitcher
                 },
                 Visible = true
             };
+
+            LoadAndRegister();
+        }
+
+        void LoadAndRegister()
+        {
+            var mappings = configManager.LoadConfig();
+            if (mappings != null)
+            {
+                hotkeyManager.RegisterHotkeys(mappings);
+            }
         }
 
         void Exit(object sender, EventArgs e)
