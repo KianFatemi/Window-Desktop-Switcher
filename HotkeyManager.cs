@@ -10,6 +10,8 @@ namespace WindowDesktopSwitcher
     class HotkeyManager
     {
         Dictionary<string, AppConfig> mappings;
+        DesktopManager desktopManager = new DesktopManager();
+        AppManager appManager = new AppManager();
 
         public void RegisterHotkeys(Dictionary<string, AppConfig> mappings)
         {
@@ -29,7 +31,11 @@ namespace WindowDesktopSwitcher
         {
             var config = mappings[e.Name];
 
-            MessageBox.Show($"Hotkey '{e.Name}' pressed! \nSwitching to Desktop {config.Desktop} \nRunning: {config.Exe}");
+            desktopManager.SwitchDesktops(config.Desktop);
+
+            Thread.Sleep(150);
+
+            appManager.FocusOrLaunch(config.Exe);
 
             e.Handled = true;
         }
