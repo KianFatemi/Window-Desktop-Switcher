@@ -17,6 +17,10 @@ namespace WindowDesktopSwitcher
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         const int SW_RESTORE = 9;
 
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool IsIconic(IntPtr hWnd);
+
         public void FocusOrLaunch(string exePath)
         {
             try
@@ -29,7 +33,11 @@ namespace WindowDesktopSwitcher
                     IntPtr handle = process.MainWindowHandle;
                     if (handle != IntPtr.Zero)
                     {
-                        ShowWindow(handle, SW_RESTORE);
+                        if (IsIconic(handle))
+                        {
+                            ShowWindow(handle, SW_RESTORE);
+
+                        }
                         SetForegroundWindow(handle);
                     }
                 }
