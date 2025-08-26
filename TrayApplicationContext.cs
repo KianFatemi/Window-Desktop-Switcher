@@ -12,7 +12,7 @@ namespace WindowDesktopSwitcher
         NotifyIcon trayIcon;
         ConfigManager configManager = new ConfigManager();
         HotkeyManager hotkeyManager = new HotkeyManager();
-
+        HotkeyManagerForm settingsForm;
         public TrayApplicationContext()
         {
             string iconPath = Path.Combine(AppContext.BaseDirectory, "Assets", "WindowDesktopSwitcher.ico");
@@ -22,7 +22,10 @@ namespace WindowDesktopSwitcher
                 Icon = new Icon(iconPath),
                 ContextMenuStrip = new ContextMenuStrip()
                 {
-                    Items = { new ToolStripMenuItem("Exit", null, Exit) }
+                    Items = {
+                        new ToolStripMenuItem("Settings", null, ShowSettings),
+                        new ToolStripMenuItem("Exit", null, Exit)
+                    }
                 },
                 Visible = true
             };
@@ -43,6 +46,16 @@ namespace WindowDesktopSwitcher
         {
             trayIcon.Visible = false;
             Application.Exit();
+        }
+
+        void ShowSettings(object sender, EventArgs e)
+        {
+            if (settingsForm == null || settingsForm.IsDisposed)
+            {
+                settingsForm = new HotkeyManagerForm();
+                settingsForm.Show();
+            }
+            else settingsForm.BringToFront();
         }
     }
 }
