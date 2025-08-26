@@ -15,9 +15,11 @@ namespace WindowDesktopSwitcher
 
         public TrayApplicationContext()
         {
+            string iconPath = Path.Combine(AppContext.BaseDirectory, "Assets", "WindowDesktopSwitcher.ico");
+
             trayIcon = new NotifyIcon()
             {
-                Icon = System.Drawing.SystemIcons.Application,
+                Icon = new Icon(iconPath),
                 ContextMenuStrip = new ContextMenuStrip()
                 {
                     Items = { new ToolStripMenuItem("Exit", null, Exit) }
