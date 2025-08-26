@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsDesktop;
 
 namespace WindowDesktopSwitcher
 {
@@ -26,20 +27,26 @@ namespace WindowDesktopSwitcher
             try
             {
                 string processName = Path.GetFileNameWithoutExtension(exePath);
-                var process = Process.GetProcessesByName(processName).FirstOrDefault();
+                var processes = Process.GetProcessesByName(processName);
+                IntPtr handleOnCurrentDesktop = IntPtr.Zero;
 
-                if (process != null)
+                foreach (var process in processes)
                 {
                     IntPtr handle = process.MainWindowHandle;
-                    if (handle != IntPtr.Zero)
+                    if (handle != IntPtr.Zero && VirtualDesktop.IsCurrentVirtualDesktop(handle)) 
                     {
-                        if (IsIconic(handle))
-                        {
-                            ShowWindow(handle, SW_RESTORE);
-
-                        }
-                        SetForegroundWindow(handle);
+                        handleOnCurrentDesktop = handle;
+                        break;
                     }
+                }
+
+                if (handleOnCurrentDesktop != IntPtr.Zero)
+                {
+                    if (IsIconic(handleOnCurrentDesktop))
+                    {
+                        ShowWindow(handleOnCurrentDesktop, SW_RESTORE);
+                    }
+                    SetForegroundWindow(handleOnCurrentDesktop);
                 }
                 else
                 {
