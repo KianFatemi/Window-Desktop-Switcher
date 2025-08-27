@@ -12,34 +12,104 @@ namespace WindowDesktopSwitcher
 {
     public partial class HotkeyManagerForm : Form
     {
-        public HotkeyManagerForm()
+        ConfigManager configManager = new ConfigManager();
+        Dictionary<string, AppConfig> mappings;
+        TrayApplicationContext mainContext;
+
+        public HotkeyManagerForm(TrayApplicationContext context)
         {
             InitializeComponent();
+            mainContext = context;
+
         }
 
         private void HotkeyManagerForm_Load(object sender, EventArgs e)
         {
+            SetupDataGridView();
+            LoadMappings();
+        }
+
+        void SetupDataGridView()
+        {
+            dgvMappings.Columns.Clear();
+            dgvMappings.AutoGenerateColumns = false;
+            dgvMappings.Columns.Add("Hotkey", "Hotkey");
+            dgvMappings.Columns.Add("Desktop", "Desktop");
+            dgvMappings.Columns.Add("Application", "Application");
+            dgvMappings.Columns["Application"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        void LoadMappings()
+        {
+            mappings = configManager.LoadConfig() ?? new Dictionary<string, AppConfig>();
+            RefreshGrid();
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        void RefreshGrid()
         {
+            dgvMappings.Rows.Clear();
+            foreach (var mapping in mappings)
+            {
+                string appName = Path.GetFileName(mapping.Value.Exe);
+                dgvMappings.Rows.Add(mapping.Key, mapping.Value.Desktop, $"{appName} ({mapping.Value.Exe})");
 
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        void btnAdd_Click(object sender, EventArgs e)
         {
-
+            using (var dialog = new EditMappingForm())
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    string keyName = new KeysConverter().ConvertToString(dialog.Hotkey);
+                    mappings[keyName] = new AppConfig { Desktop = dialog.DesktopNumber, Exe = dialog.ApplicationPath };
+                    //SaveChangesAndReload();
+                }
+            }
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        void btnEdit_Click(object sender, EventArgs e)
         {
+            if (dgvMappings.SelectedRows.Count == 0) return;
 
-        }
+            string selectedKey = dgvMappings.SelectedRows[0].Cells["Hotkey"].Value.ToString();
+            var currentConfig = mappings[selectedKey];
 
-        private void button1_Click_2(object sender, EventArgs e)
-        {
+            Enum.TryParse(selectedKey, out Keys hotkey);
 
+            using (var dialog = new EditMappingForm(hotkey, currentConfig.Desktop, currentConfig.Exe))
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    mappings.Remove(selectedKey);
+                    string newKeyName = new KeysConverter().ConvertToInvariantString(dialog.Hotkey);
+                    mappings[newKeyName] = new AppConfig { Desktop = dialog.DesktopNumber, Exe = dialog.ApplicationPath };
+                    SaveChangesAndReload();
+                }
+            }
+
+            void btnRemove_Click(object sender, EventArgs e)
+            {
+                if (dgvMappings.SelectedRows.Count == 0) return;
+
+                string selectedKey = dgvMappings.SelectedRows[0].Cells["Hotkey"].Value.ToString();
+                var result = MessageBox.Show($"Are you sure you want to remove the mapping for '{selectedKey}'?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    mappings.Remove(selectedKey);
+                    SaveChangesAndReload();
+                }
+            }
+
+            void SaveChangesAndReload()
+            {
+                configManager.SaveConfig(mappings);
+                RefreshGrid();
+                mainContext?.ReloadHotkeys();
+            }
         }
     }
 }

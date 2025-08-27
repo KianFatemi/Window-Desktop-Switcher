@@ -25,5 +25,20 @@ namespace WindowDesktopSwitcher
                 return null;
             }
         }
+
+        public void SaveConfig(Dictionary<string, AppConfig> mappings)
+        {
+            try
+            {
+                var configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config,json");
+
+                var jsonText = JsonConvert.SerializeObject(mappings, Formatting.Indented);
+                File.WriteAllText(configFile, jsonText);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Error saving configuration: {ex.Message}", "Config Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

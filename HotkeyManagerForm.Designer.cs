@@ -47,7 +47,6 @@
             dgvMappings.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvMappings.Size = new Size(800, 450);
             dgvMappings.TabIndex = 0;
-            dgvMappings.CellContentClick += dataGridView1_CellContentClick;
             // 
             // btnAdd
             // 
@@ -57,7 +56,6 @@
             btnAdd.TabIndex = 1;
             btnAdd.Text = "Add Mapping\r\n";
             btnAdd.UseVisualStyleBackColor = true;
-            btnAdd.Click += button1_Click;
             // 
             // btnEdit
             // 
@@ -67,7 +65,6 @@
             btnEdit.TabIndex = 2;
             btnEdit.Text = "Edit Selected";
             btnEdit.UseVisualStyleBackColor = true;
-            btnEdit.Click += button1_Click_1;
             // 
             // btnRemove
             // 
@@ -77,7 +74,6 @@
             btnRemove.TabIndex = 3;
             btnRemove.Text = "Remove Selected";
             btnRemove.UseVisualStyleBackColor = true;
-            btnRemove.Click += button1_Click_2;
             // 
             // HotkeyManagerForm
             // 

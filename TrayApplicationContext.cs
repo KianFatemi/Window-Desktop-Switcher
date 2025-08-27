@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Bson;
+using NHotkey.WindowsForms;
+
 
 namespace WindowDesktopSwitcher
 {
-    class TrayApplicationContext : ApplicationContext
+    public class TrayApplicationContext : ApplicationContext
     {
         NotifyIcon trayIcon;
         ConfigManager configManager = new ConfigManager();
         HotkeyManager hotkeyManager = new HotkeyManager();
-        HotkeyManagerForm settingsForm;
+        HotkeyManagerForm? settingsForm;
         public TrayApplicationContext()
         {
             string iconPath = Path.Combine(AppContext.BaseDirectory, "Assets", "WindowDesktopSwitcher.ico");
@@ -30,11 +32,12 @@ namespace WindowDesktopSwitcher
                 Visible = true
             };
 
-            LoadAndRegister();
+            ReloadHotkeys();
         }
 
-        void LoadAndRegister()
+        public void ReloadHotkeys()
         {
+            hotkeyManager.UnregisterAll();
             var mappings = configManager.LoadConfig();
             if (mappings != null)
             {
@@ -44,6 +47,7 @@ namespace WindowDesktopSwitcher
 
         void Exit(object sender, EventArgs e)
         {
+            hotkeyManager.UnregisterAll();
             trayIcon.Visible = false;
             Application.Exit();
         }
@@ -52,7 +56,7 @@ namespace WindowDesktopSwitcher
         {
             if (settingsForm == null || settingsForm.IsDisposed)
             {
-                settingsForm = new HotkeyManagerForm();
+                settingsForm = new HotkeyManagerForm(this);
                 settingsForm.Show();
             }
             else settingsForm.BringToFront();

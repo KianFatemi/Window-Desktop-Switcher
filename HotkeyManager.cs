@@ -39,5 +39,15 @@ namespace WindowDesktopSwitcher
 
             e.Handled = true;
         }
+
+        public void UnregisterAll()
+        {
+            if (mappings == null) return;
+
+            foreach (var mapping in mappings)
+            {
+                NHotkey.WindowsForms.HotkeyManager.Current.Remove(mapping.Key);
+            }
+        }
     }
 }

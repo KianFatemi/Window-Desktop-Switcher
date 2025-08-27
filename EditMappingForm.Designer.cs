@@ -49,7 +49,7 @@
             txtHotkey.Size = new Size(66, 31);
             txtHotkey.TabIndex = 0;
             txtHotkey.Text = "Hotkey";
-            txtHotkey.TextChanged += textBox1_TextChanged;
+            txtHotkey.KeyDown += txtHotkey_KeyDown;
             // 
             // btnRecord
             // 
@@ -59,7 +59,7 @@
             btnRecord.TabIndex = 1;
             btnRecord.Text = "Record Hotkey";
             btnRecord.UseVisualStyleBackColor = true;
-            btnRecord.Click += button1_Click;
+            btnRecord.Click += btnRecord_Click;
             // 
             // label1
             // 
@@ -78,7 +78,6 @@
             label2.Size = new Size(153, 25);
             label2.TabIndex = 3;
             label2.Text = "Desktop Number:";
-            label2.Click += label2_Click;
             // 
             // numDesktop
             // 
@@ -104,7 +103,6 @@
             txtAppPath.Name = "txtAppPath";
             txtAppPath.Size = new Size(266, 31);
             txtAppPath.TabIndex = 6;
-            txtAppPath.TextChanged += textBox1_TextChanged_1;
             // 
             // button2
             // 
@@ -114,6 +112,7 @@
             button2.TabIndex = 7;
             button2.Text = "Browse...";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += btnBrowse_Click;
             // 
             // btnCancel
             // 
@@ -124,7 +123,7 @@
             btnCancel.TabIndex = 8;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = true;
-            btnCancel.Click += button1_Click_1;
+            btnCancel.Click += btnCancel_Click;
             // 
             // btnSave
             // 
@@ -135,6 +134,7 @@
             btnSave.TabIndex = 9;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // EditMappingForm
             // 
