@@ -56,6 +56,7 @@
             btnAdd.TabIndex = 1;
             btnAdd.Text = "Add Mapping\r\n";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // btnEdit
             // 
@@ -65,6 +66,7 @@
             btnEdit.TabIndex = 2;
             btnEdit.Text = "Edit Selected";
             btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
             // btnRemove
             // 
@@ -74,6 +76,7 @@
             btnRemove.TabIndex = 3;
             btnRemove.Text = "Remove Selected";
             btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.Click += btnRemove_Click;
             // 
             // HotkeyManagerForm
             // 

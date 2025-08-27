@@ -30,7 +30,7 @@ namespace WindowDesktopSwitcher
         {
             try
             {
-                var configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config,json");
+                var configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
 
                 var jsonText = JsonConvert.SerializeObject(mappings, Formatting.Indented);
                 File.WriteAllText(configFile, jsonText);

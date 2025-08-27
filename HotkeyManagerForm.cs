@@ -65,7 +65,7 @@ namespace WindowDesktopSwitcher
                 {
                     string keyName = new KeysConverter().ConvertToString(dialog.Hotkey);
                     mappings[keyName] = new AppConfig { Desktop = dialog.DesktopNumber, Exe = dialog.ApplicationPath };
-                    //SaveChangesAndReload();
+                    SaveChangesAndReload();
                 }
             }
         }
@@ -89,27 +89,27 @@ namespace WindowDesktopSwitcher
                     SaveChangesAndReload();
                 }
             }
+        }
 
-            void btnRemove_Click(object sender, EventArgs e)
+        void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (dgvMappings.SelectedRows.Count == 0) return;
+
+            string selectedKey = dgvMappings.SelectedRows[0].Cells["Hotkey"].Value.ToString();
+            var result = MessageBox.Show($"Are you sure you want to remove the mapping for '{selectedKey}'?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
             {
-                if (dgvMappings.SelectedRows.Count == 0) return;
-
-                string selectedKey = dgvMappings.SelectedRows[0].Cells["Hotkey"].Value.ToString();
-                var result = MessageBox.Show($"Are you sure you want to remove the mapping for '{selectedKey}'?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                if (result == DialogResult.Yes)
-                {
-                    mappings.Remove(selectedKey);
-                    SaveChangesAndReload();
-                }
+                mappings.Remove(selectedKey);
+                SaveChangesAndReload();
             }
+        }
 
-            void SaveChangesAndReload()
-            {
-                configManager.SaveConfig(mappings);
-                RefreshGrid();
-                mainContext?.ReloadHotkeys();
-            }
+        void SaveChangesAndReload()
+        {
+            configManager.SaveConfig(mappings);
+            RefreshGrid();
+            mainContext?.ReloadHotkeys();
         }
     }
 }
