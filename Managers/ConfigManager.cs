@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace WindowDesktopSwitcher.Managers
         {
             try
             {
-                var configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigFileName);
+                var configFile = GetConfigPath();
                 var jsonText = File.ReadAllText(configFile);
                 return JsonConvert.DeserializeObject<Dictionary<string, AppConfig>>(jsonText);
             }
@@ -31,7 +32,7 @@ namespace WindowDesktopSwitcher.Managers
         {
             try
             {
-                var configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
+                var configFile = GetConfigPath();
 
                 var jsonText = JsonConvert.SerializeObject(mappings, Formatting.Indented);
                 File.WriteAllText(configFile, jsonText);
@@ -41,5 +42,13 @@ namespace WindowDesktopSwitcher.Managers
                 MessageBox.Show($"Error saving configuration: {ex.Message}", "Config Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+       string GetConfigPath()
+        {
+            string exePath = Process.GetCurrentProcess().MainModule.FileName;
+            string exeDir = Path.GetDirectoryName(exePath);
+            return Path.Combine(exeDir, ConfigFileName);
+        }
+
     }
 }
