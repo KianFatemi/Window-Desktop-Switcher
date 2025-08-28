@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowDesktopSwitcher.Forms;
+using WindowDesktopSwitcher.Managers;
+using WindowDesktopSwitcher.Models;
 
 namespace WindowDesktopSwitcher
 {

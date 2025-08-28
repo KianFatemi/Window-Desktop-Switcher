@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WindowsDesktop;
 
 
-namespace WindowDesktopSwitcher
+namespace WindowDesktopSwitcher.Managers
 {
     class DesktopManager
     {

@@ -1,3 +1,5 @@
+using WindowDesktopSwitcher.Forms;
+
 namespace WindowDesktopSwitcher
 {
     static class Program

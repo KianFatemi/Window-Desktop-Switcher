@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NHotkey;
+using WindowDesktopSwitcher.Models;
+using WindowDesktopSwitcher.Services;
 
-namespace WindowDesktopSwitcher
+namespace WindowDesktopSwitcher.Managers
 {
     class HotkeyManager
     {

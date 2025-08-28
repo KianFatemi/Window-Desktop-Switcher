@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Bson;
 using NHotkey.WindowsForms;
+using WindowDesktopSwitcher.Managers;
+using HotkeyManager = WindowDesktopSwitcher.Managers.HotkeyManager;
 
 
-namespace WindowDesktopSwitcher
+namespace WindowDesktopSwitcher.Forms
 {
     public class TrayApplicationContext : ApplicationContext
     {
