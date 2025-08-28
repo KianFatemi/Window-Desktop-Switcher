@@ -43,17 +43,17 @@
             // 
             // txtHotkey
             // 
-            txtHotkey.Location = new Point(217, 77);
+            txtHotkey.Location = new Point(217, 80);
             txtHotkey.Name = "txtHotkey";
             txtHotkey.ReadOnly = true;
-            txtHotkey.Size = new Size(66, 31);
+            txtHotkey.Size = new Size(266, 31);
             txtHotkey.TabIndex = 0;
             txtHotkey.Text = "Hotkey";
             txtHotkey.KeyDown += txtHotkey_KeyDown;
             // 
             // btnRecord
             // 
-            btnRecord.Location = new Point(359, 77);
+            btnRecord.Location = new Point(499, 78);
             btnRecord.Name = "btnRecord";
             btnRecord.Size = new Size(141, 34);
             btnRecord.TabIndex = 1;
