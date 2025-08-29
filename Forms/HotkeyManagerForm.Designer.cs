@@ -32,6 +32,7 @@
             btnAdd = new Button();
             btnEdit = new Button();
             btnRemove = new Button();
+            chkStartup = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)dgvMappings).BeginInit();
             SuspendLayout();
             // 
@@ -78,11 +79,23 @@
             btnRemove.UseVisualStyleBackColor = true;
             btnRemove.Click += btnRemove_Click;
             // 
+            // chkStartup
+            // 
+            chkStartup.AutoSize = true;
+            chkStartup.Location = new Point(27, 398);
+            chkStartup.Name = "chkStartup";
+            chkStartup.Size = new Size(191, 29);
+            chkStartup.TabIndex = 4;
+            chkStartup.Text = "Start with Windows";
+            chkStartup.UseVisualStyleBackColor = true;
+            chkStartup.CheckedChanged += chkStartup_CheckedChanged;
+            // 
             // HotkeyManagerForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(chkStartup);
             Controls.Add(btnRemove);
             Controls.Add(btnEdit);
             Controls.Add(btnAdd);
@@ -92,6 +105,7 @@
             Load += HotkeyManagerForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvMappings).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -100,5 +114,6 @@
         private Button btnAdd;
         private Button btnEdit;
         private Button btnRemove;
+        private CheckBox chkStartup;
     }
 }

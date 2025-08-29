@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using WindowDesktopSwitcher.Forms;
 using WindowDesktopSwitcher.Managers;
 using WindowDesktopSwitcher.Models;
+using Microsoft.Win32;
 
 namespace WindowDesktopSwitcher
 {
@@ -18,6 +19,9 @@ namespace WindowDesktopSwitcher
         ConfigManager configManager = new ConfigManager();
         Dictionary<string, AppConfig> mappings;
         TrayApplicationContext mainContext;
+
+        const string AppName = "WindowDesktopSwitcher";
+        static readonly string StartupKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
 
         public HotkeyManagerForm(TrayApplicationContext context)
         {
@@ -30,6 +34,12 @@ namespace WindowDesktopSwitcher
         {
             SetupDataGridView();
             LoadMappings();
+
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(StartupKey, false))
+            {
+                var isEnabled = key.GetValue(AppName) != null;
+                chkStartup.Checked = isEnabled;
+            }
         }
 
         void SetupDataGridView()
@@ -113,6 +123,33 @@ namespace WindowDesktopSwitcher
             configManager.SaveConfig(mappings);
             RefreshGrid();
             mainContext?.ReloadHotkeys();
+        }
+
+        void SetStartup(bool isChecked)
+        {
+            try
+            {
+                using(RegistryKey key = Registry.CurrentUser.OpenSubKey(StartupKey, true))
+                {
+                    if (isChecked)
+                    {
+                        key.SetValue(AppName, Application.ExecutablePath);
+                    }
+                    else
+                    {
+                        key.DeleteValue(AppName, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving startup setting: {ex.Message}", "Registry Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void chkStartup_CheckedChanged(object sender, EventArgs e)
+        {
+            SetStartup(chkStartup.Checked);
         }
     }
 }
