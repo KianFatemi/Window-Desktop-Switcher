@@ -11,6 +11,7 @@ using WindowDesktopSwitcher.Forms;
 using WindowDesktopSwitcher.Managers;
 using WindowDesktopSwitcher.Models;
 using Microsoft.Win32;
+using System.Diagnostics;
 
 namespace WindowDesktopSwitcher
 {
@@ -64,8 +65,26 @@ namespace WindowDesktopSwitcher
             dgvMappings.Rows.Clear();
             foreach (var mapping in mappings)
             {
-                string appName = Path.GetFileName(mapping.Value.Exe);
-                dgvMappings.Rows.Add(mapping.Key, mapping.Value.Desktop, $"{appName} ({mapping.Value.Exe})");
+                string exePath = mapping.Value.Exe;
+                string displayName = Path.GetFileName(exePath);
+
+                try
+                {
+                    if (File.Exists(exePath))
+                    {
+                        var versionInfo = FileVersionInfo.GetVersionInfo(exePath);
+                        if (!string.IsNullOrEmpty(versionInfo.FileDescription))
+                        {
+                            displayName = versionInfo.FileDescription;
+                        }
+                    }
+                }
+                catch
+                {
+                    string appName = Path.GetFileName(mapping.Value.Exe);
+                    dgvMappings.Rows.Add(mapping.Key, mapping.Value.Desktop, $"{appName} ({mapping.Value.Exe})");
+                }
+                dgvMappings.Rows.Add(mapping.Key, mapping.Value.Desktop, $"{displayName} ({exePath})");
 
             }
         }
