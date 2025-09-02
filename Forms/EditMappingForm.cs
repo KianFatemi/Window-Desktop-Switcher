@@ -27,7 +27,7 @@ namespace WindowDesktopSwitcher
             txtAppPath.Text = appPath;
         }
 
-        void btnRecord_Click(object sender, EventArgs e) 
+        void btnRecord_Click(object sender, EventArgs e)
         {
             txtHotkey.Text = "Press a key...";
             txtHotkey.Focus();
@@ -35,15 +35,20 @@ namespace WindowDesktopSwitcher
 
         void txtHotkey_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.ShiftKey && e.KeyCode != Keys.Menu)
+            e.SuppressKeyPress = true;
+
+            if (e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.ShiftKey || e.KeyCode == Keys.Menu
+                || e.KeyCode == Keys.LWin || e.KeyCode == Keys.RWin)
             {
-                e.SuppressKeyPress = true;
-                Hotkey = e.KeyCode;
-                txtHotkey.Text = new KeysConverter().ConvertToString(e.KeyCode);
+                return;
             }
+
+            Keys fullHotkey = e.KeyCode | e.Modifiers;
+            Hotkey = fullHotkey;
+            txtHotkey.Text = new KeysConverter().ConvertToString(fullHotkey);
         }
 
-        void btnBrowse_Click(object sender, EventArgs e) 
+        void btnBrowse_Click(object sender, EventArgs e)
         {
             using (var dialog = new OpenFileDialog())
             {
@@ -56,12 +61,12 @@ namespace WindowDesktopSwitcher
             }
         }
 
-        void btnSave_Click(object sender, EventArgs e) 
+        void btnSave_Click(object sender, EventArgs e)
         {
             if (Hotkey == Keys.None || string.IsNullOrWhiteSpace(txtAppPath.Text))
             {
                 MessageBox.Show("Please record a hotkey and select an application path.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.DialogResult = DialogResult.None; 
+                this.DialogResult = DialogResult.None;
                 return;
             }
 
@@ -71,7 +76,7 @@ namespace WindowDesktopSwitcher
             this.Close();
         }
 
-        void btnCancel_Click(object sender, EventArgs e) 
+        void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();

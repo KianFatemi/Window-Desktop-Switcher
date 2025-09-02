@@ -20,11 +20,19 @@ namespace WindowDesktopSwitcher.Managers
             this.mappings = mappings;
             if (mappings == null) return;
 
+            var converter = new KeysConverter();
+
             foreach (var mapping in mappings)
             {
-                if (Enum.TryParse(mapping.Key, true, out Keys keys))
+                try
                 {
+                    Keys keys = (Keys)converter.ConvertFromString(mapping.Key);
                     NHotkey.WindowsForms.HotkeyManager.Current.AddOrReplace(mapping.Key, keys, OnHotkeyPressed);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Could not parse hotkey '{mapping.Key}': {ex.Message}");
+
                 }
             }
         }
