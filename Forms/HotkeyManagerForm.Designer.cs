@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HotkeyManagerForm));
             dgvMappings = new DataGridView();
             btnAdd = new Button();
             btnEdit = new Button();
@@ -39,52 +40,64 @@
             // dgvMappings
             // 
             dgvMappings.AllowUserToAddRows = false;
+            dgvMappings.BackgroundColor = SystemColors.HighlightText;
+            dgvMappings.BorderStyle = BorderStyle.None;
             dgvMappings.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvMappings.Dock = DockStyle.Fill;
+            dgvMappings.Dock = DockStyle.Top;
             dgvMappings.Location = new Point(0, 0);
             dgvMappings.Name = "dgvMappings";
             dgvMappings.ReadOnly = true;
             dgvMappings.RowHeadersWidth = 62;
             dgvMappings.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvMappings.Size = new Size(800, 450);
+            dgvMappings.Size = new Size(800, 365);
             dgvMappings.TabIndex = 0;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(285, 394);
+            btnAdd.BackColor = Color.Gainsboro;
+            btnAdd.FlatAppearance.BorderSize = 0;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Location = new Point(248, 382);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(135, 34);
+            btnAdd.Size = new Size(153, 43);
             btnAdd.TabIndex = 1;
             btnAdd.Text = "Add Mapping\r\n";
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
             // 
             // btnEdit
             // 
-            btnEdit.Location = new Point(458, 394);
+            btnEdit.BackColor = Color.Gainsboro;
+            btnEdit.FlatAppearance.BorderSize = 0;
+            btnEdit.FlatStyle = FlatStyle.Flat;
+            btnEdit.Location = new Point(426, 383);
             btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(135, 34);
+            btnEdit.Size = new Size(153, 43);
             btnEdit.TabIndex = 2;
             btnEdit.Text = "Edit Selected";
-            btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.UseVisualStyleBackColor = false;
             btnEdit.Click += btnEdit_Click;
             // 
             // btnRemove
             // 
-            btnRemove.Location = new Point(632, 394);
+            btnRemove.BackColor = Color.Gainsboro;
+            btnRemove.FlatAppearance.BorderSize = 0;
+            btnRemove.FlatStyle = FlatStyle.Flat;
+            btnRemove.Location = new Point(604, 382);
             btnRemove.Name = "btnRemove";
-            btnRemove.Size = new Size(156, 34);
+            btnRemove.Size = new Size(184, 44);
             btnRemove.TabIndex = 3;
             btnRemove.Text = "Remove Selected";
-            btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.UseVisualStyleBackColor = false;
             btnRemove.Click += btnRemove_Click;
             // 
             // chkStartup
             // 
             chkStartup.AutoSize = true;
-            chkStartup.Location = new Point(27, 398);
+            chkStartup.FlatStyle = FlatStyle.Flat;
+            chkStartup.Location = new Point(22, 390);
             chkStartup.Name = "chkStartup";
-            chkStartup.Size = new Size(191, 29);
+            chkStartup.Size = new Size(186, 29);
             chkStartup.TabIndex = 4;
             chkStartup.Text = "Start with Windows";
             chkStartup.UseVisualStyleBackColor = true;
@@ -94,12 +107,14 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(800, 450);
             Controls.Add(chkStartup);
             Controls.Add(btnRemove);
             Controls.Add(btnEdit);
             Controls.Add(btnAdd);
             Controls.Add(dgvMappings);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "HotkeyManagerForm";
             Text = "Hotkey Manager - Desktop Switcher";
             Load += HotkeyManagerForm_Load;
